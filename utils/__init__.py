@@ -1,8 +1,8 @@
-from .GameInit import *
+from .GameControl import *
 from .PropEffect import *
 from .RandomSelect import *
 # from .Player import PlayerInit
-from .PlayerAction import *
+from .ActionControl import *
 
 from .config import dct_tools
 

@@ -5,7 +5,7 @@
 
 from loguru import logger as log
 
-from .GameInit import PlayerInit, RoundInit
+from .GameControl import PlayerInit, RoundInit
 from .PropEffect import *
 
 
@@ -47,7 +47,7 @@ def UseMedicine(player: PlayerInit, round: RoundInit):
     player.life = player.life + life
     if player.life <= 0:
         player.life = 0
-        log.warning(f"玩家 {player.name} 使用过期药品, 生命 {player.life} 死亡")
+        # log.warning(f"玩家 {player.name} 使用过期药品, 生命 {player.life} 死亡")
     if player.life >= 4:
         player.life = 4
 
@@ -136,31 +136,3 @@ def UseHhandcuffs(player: PlayerInit, round: RoundInit):
     log.debug(f"玩家 {player.name} 使用手铐")
     return
 
-
-from .config import dct_actions
-
-
-class PlayerActions:
-    """
-    玩家行动
-    """
-
-    def __init__(self, player: PlayerInit, round: RoundInit) -> None:
-        self.player = player
-        self.round = round
-
-        pass
-
-    def UseProp(self, num):
-        """
-        使用道具
-        """
-        log.debug(f"玩家 {self.player.name} 使用道具 {num}")
-
-        action = dct_actions.get(num, None)
-        if callable(action):
-            action(self.player, self.round)
-        else:
-            log.warning(f"玩家 {self.player.name} 使用道具 {num} 无效")
-
-        return

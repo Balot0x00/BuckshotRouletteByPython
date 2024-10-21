@@ -4,9 +4,9 @@
 """
 
 from loguru import logger as log
-from .GameInit import PlayerInit, RoundInit
+from .GameControl import PlayerInit, RoundInit
 from .PropEffect import *
-from .config import dct_actions  # 导入外部字典
+from .config import dct_actions , dct_actionsv2
 
 
 class PlayerActionsDemo:
@@ -16,17 +16,23 @@ class PlayerActionsDemo:
         self.player = player
         self.round = round
 
-    # 其他方法保持不变...
+    def UseCiga(self, *args, **kwargs):
+        """使用香烟"""
+        log.debug(f"玩家 {self.player.name} 使用香烟")
+        # 检查玩家是否有香烟
+        if self.player.life > 0:
+            pass
+
+
 
     def UseProp(self, num: str, *args, **kwargs):
         """使用道具"""
         log.debug(f"玩家 {self.player.name} 使用道具 {num}")
 
-        action_name = dct_actions.get(num, None)
-        tmp = hasat
-        tr(self, action_name)
+        action_name = dct_actionsv2.get(num, None)
 
         if action_name and hasattr(self, action_name):  # 确保方法存在
+            # if action 属于扩展行动字典, 即有使用对象的行动字典
             action_method = getattr(self, action_name)  # 获取方法
             action_method(*args, **kwargs)  # 调用方法并传递参数
         else:

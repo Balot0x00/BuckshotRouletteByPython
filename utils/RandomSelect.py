@@ -24,7 +24,7 @@ def RandomSelectTools(k: int):
     随机发放道具 1-5
     :return: {num:tool}
     """
-    log.debug(f"抽取道具数量:{k}")
+    # log.debug(f"抽取道具数量:{k}")
     dct_tools = {
         1: "香烟",
         2: "过期药品",
