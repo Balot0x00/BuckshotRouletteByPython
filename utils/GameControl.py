@@ -63,8 +63,8 @@ class RoundInit:
     一次回合的初始化, 绑定弹夹信息, 设定血量上限
     """
 
-    def __init__(self, gun: GunInit):
-
+    def __init__(self):
+        gun = GunInit()
         self.gun = gun.gun
         # self.props = RandomSelectTools(gun.tools_num)
         self.props = gun.props
@@ -128,17 +128,19 @@ class PlayerActions:
 
     def PropsCheck(self, num):
         props_key = [a.split(":")[0] for a in self.player.props]
+        if num == "0":
+            return True
         if num not in props_key:
             log.warning(f"玩家 {self.player.name} 使用道具 {num} 无效")
             return False
+
         return True
-    
+
     def PropsRemove(self, num):
         for a in self.player.props:
             if num in a:
                 self.player.props.remove(a)
         return
-
 
     def UseProp(self, num):
         """
@@ -157,6 +159,7 @@ class PlayerActions:
         action = dct_actions.get(num, None)
         if callable(action):
             action(self.player, self.round)
+
         else:
             log.warning(f"玩家 {self.player.name} 使用道具 {num} 无效")
 
@@ -166,6 +169,5 @@ class PlayerActions:
         # 使用道具后, 检查状态
         self.LifeCheck()
         self.GunCheck()
-
 
         return

@@ -14,7 +14,7 @@ def UseGun(player: PlayerInit, round: RoundInit):
     使用枪
     """
     log.debug(f"玩家 {player.name} 开枪")
-    bullet = round.gun.pop()
+    bullet = round.gun.pop(0)
     if bullet == 1:
         player.life = player.life - 1
     if bullet == 0:
