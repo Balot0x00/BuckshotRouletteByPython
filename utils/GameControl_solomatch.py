@@ -68,6 +68,14 @@ class PlayerActionsSoloMatch:
         elif callable(actionv2):
             log.debug(f"对敌道具有效")
 
-            actionv2(self.currnet, self.round, target="")
+            self.ShowTarget()
+            target_input = int(input(f"请选择目标: "))
+            while target_input not in self.ShowTarget():
+                log.warning(f"目标无效, 请重新选择")
+                target_input = int(input(f"请选择目标: "))
+
+            target = self.players[target_input]
+
+            actionv2(self.currnet, self.round, target)
         else:
             log.warning(f"道具无效")

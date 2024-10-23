@@ -134,6 +134,6 @@ def UseHhandcuffs(player: PlayerInit, round: RoundInit, target: PlayerInit):
     """
     9. 使用手铐
     """
-    log.debug(f"玩家 {player.name} 使用手铐")
+    log.debug(f"玩家 {player.name} 对 {target.name} 使用手铐")
     return
 

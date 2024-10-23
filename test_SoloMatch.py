@@ -27,5 +27,8 @@ print (action.currnet.name)
 # print (action.currnet.name)
 
 # 展示可选目标
-lst_target = action.ShowTarget()
-print(lst_target)
+# lst_target = action.ShowTarget()
+# print(lst_target)
+
+# 使用道具
+action.UseProp("9")
