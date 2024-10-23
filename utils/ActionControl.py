@@ -1,5 +1,4 @@
 """
-玩家行动, 行动前逻辑判断, 玩家状态判断
 根据道具效果对玩家状态进行修改
 """
 
@@ -129,7 +128,9 @@ def UsePhone(player: PlayerInit, round: RoundInit):
     return
 
 
-def UseHhandcuffs(player: PlayerInit, round: RoundInit):
+
+# 以下道具需要选择使用对象 target
+def UseHhandcuffs(player: PlayerInit, round: RoundInit, target: PlayerInit):
     """
     9. 使用手铐
     """

@@ -10,4 +10,4 @@ from .config import dct_tools
 
 # 导入GPT
 # from .PlayerActionGPT import *
-from .PlayerActionDemo import *
+from .GameControl_solomatch import *

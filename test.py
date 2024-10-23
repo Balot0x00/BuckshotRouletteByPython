@@ -1,24 +1,12 @@
-import utils
-from loguru import logger as log
+dct_test = {
+    "1": "UseGun",
+    "2": "UseCiga",
+    "3": "UseBear",
+    "4": "UseMagnifier",
+    "5": "UseReverse",
+    "6": "UseAdrenaline",
+    "7": "UseSaw",
+    "8": "UsePhone",
+}
 
-# gun01
-gun01 = utils.GunInit()
-round01 = utils.RoundInit(gun01)
-zhangsan = utils.PlayerInit(round01)
-
-# player action
-action = utils.PlayerActions(zhangsan, round01)
-print (f"player: {zhangsan.life} {round01.gun}, {zhangsan.props}")
-action.UseProp("6")
-
-log.critical(f"弹夹清空")
-round01.gun = []
-action.UseProp("1")
-print (f"player: {zhangsan.life} {round01.gun}, {zhangsan.props}")
-
-# player dead
-log.critical(f"玩家 {zhangsan.name} 死亡")
-
-zhangsan.life = 0
-action.UseProp("3")
 

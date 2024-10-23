@@ -48,7 +48,6 @@ def TheGun():
 class GunInit:
     """
     一次 gun 的初始化，生成道具组和弹夹
-
     """
 
     def __init__(self):
@@ -74,14 +73,28 @@ class RoundInit:
 
 class PlayerInit:
     def __init__(self, round: RoundInit):
-        self.id: int = 0
+        self.id: int = 1
         self.name: str = "playername"
         self.life = round.life
         self.props = round.props
         # self.round = round
 
 
+class NPCInit(PlayerInit):
+    """
+    NPC 初始化, NPC单独初始化, 当前NPC 的行动完全随机, 不获取round内的信息
+    """
+
+    def __init__(self, round: RoundInit):
+        self.id: int = 0
+        self.name: str = "NPC"
+        self.life = round.life
+        self.props = round.props
+        # self.round = round
+
+
 from .config import dct_actions
+from .LogControl import PrintStatus
 
 
 class PlayerActions:
@@ -167,7 +180,8 @@ class PlayerActions:
         self.PropsRemove(num)
 
         # 使用道具后, 检查状态
-        self.LifeCheck()
-        self.GunCheck()
+        if self.LifeCheck():
+            self.GunCheck()
+            PrintStatus(self.player)
 
         return
