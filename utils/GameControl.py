@@ -70,6 +70,7 @@ class RoundInit:
         self.props = gun.props
         self.max = RandomLife()
         self.life = self.max
+        self.gun_tag = 1
 
 
 class PlayerInit:

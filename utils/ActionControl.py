@@ -16,7 +16,12 @@ def UseGun(player: PlayerInit, round: RoundInit):
     log.debug(f"玩家 {player.name} 开枪")
     bullet = round.gun.pop(0)
     if bullet == 1:
-        player.life = player.life - 1
+        player.life = player.life - 1*round.gun_tag
+        # 打出翻倍伤害后, 恢复为1倍伤害
+        if round.gun_tag == 2:
+            round.gun_tag = 1
+
+
     if bullet == 0:
         pass
     log.debug(
@@ -111,8 +116,10 @@ def UseAdrenaline(player: PlayerInit, round: RoundInit):
 def UseSaw(player: PlayerInit, round: RoundInit):
     """
     7: 使用短锯, 当前子弹伤害翻倍
+    修改gun_tag 标志位为2, 伤害翻倍
     """
     log.debug(f"玩家 {player.name} 使用短锯")
+    round.gun_tag = 2
     return
 
 
