@@ -26,15 +26,10 @@ print(action.currnet_player.name)
 if action.currnet_player.name == "NPC":
     action.currnet_player.status = "slience"
 
-
-# 切换玩家
-# action.ActionSwitch()
-# print (action.currnet.name)
-
-# 展示可选目标
-lst_target = action.ShowTargetGun()
-print(lst_target)
-# action.SwitchTarget()
-
-# 使用道具
-action.UseProp("0")
+while True:
+    action.GunCheck()
+    action.ActionCheck()
+    action.LifeCheck()
+    print(f"当前行动:  {action.currnet_player.name}")
+    num = input("选择道具")
+    action.UseProps(num)

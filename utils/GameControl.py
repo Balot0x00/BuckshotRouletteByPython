@@ -161,10 +161,6 @@ class PlayerActions:
         """
         使用道具
         """
-        # log.debug(f"玩家 {self.player.name} 使用道具 {num}")
-        # if num in
-        # log.debug(f"道具列表: {self.player.props}")
-
         # 使用道具前, 玩家状态检查
         if not self.LifeCheck():
             return

@@ -4,10 +4,11 @@
 """
 
 from loguru import logger as log
-from .GameControl import PlayerInit, RoundInit
+from .GameControl import PlayerInit, RoundInit, GunInit
 from .PropEffect import *
 from .config import dct_actions, dct_action_other, dct_action_all
 from .GameControl import PlayerActions
+from .RandomSelect import RandomSelectTools
 
 
 # Python < 3.9 版本中不能直接使用 list[PlayerInit]作为类型注解
@@ -30,6 +31,26 @@ class PlayerActionsSoloMatch:
         self.switch = 0
         self.currnet_player = self.ActionSwitch()
 
+    def GunNew(self):
+        log.info(f"重新填充弹夹")
+        gun_new = GunInit()
+        self.round.gun = gun_new.gun
+        self.round.props_num = gun_new.props_num
+
+        log.debug(f"为所有玩家添加道具")
+        for player in self.players:
+            props_new = RandomSelectTools(self.round.props_num)
+            props_old = player.props
+            props = props_old + props_new[0:8]
+            player.props = props
+
+    def GunCheck(self):
+        """
+        弹夹检查
+        """
+        if len(self.round.gun) == 0:
+            self.GunNew()
+
     def LifeCheck(self):
         """
         检查当前玩家生命状态
@@ -42,7 +63,6 @@ class PlayerActionsSoloMatch:
             self.currnet_player = self.ActionSwitch()
         else:
             result = True
-
         return result
 
     def ActionCheck(self):
@@ -120,7 +140,7 @@ class PlayerActionsSoloMatch:
         log.debug(f"目标 {target.name}")
         return target
 
-    def UseProp(self, p_slelect: str):
+    def UseProps(self, p_slelect: str):
         """
         使用道具
         """
@@ -139,10 +159,15 @@ class PlayerActionsSoloMatch:
                 action_other(self.currnet_player, self.round, target_obj)
 
             elif callable(action_all):
-                log.debug(f"使用0号道具, 对alive生效")
+                log.debug(f"使用0号道具, 对alive slience生效")
                 target_obj = self.SwitchTarget()
-                action_all(self.currnet_player, self.round, target_obj)
+                buttle = action_all(self.currnet_player, self.round, target_obj)
 
+                # 自空枪判断
+                if buttle == 0 and target_obj == self.currnet_player:
+                    log.info(f"玩家 {self.currnet_player.name} 自空枪")
+                else:
+                    self.ActionSwitch()
             else:
                 log.warning(f"道具无效")
         else:

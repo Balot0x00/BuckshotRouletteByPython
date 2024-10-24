@@ -124,15 +124,14 @@ def UseGun(player: PlayerInit, round: RoundInit, target: PlayerInit):
         # 打出翻倍伤害后, 恢复为1倍伤害
         if round.gun_tag == 2:
             round.gun_tag = 1
-        # 切换操作玩家
 
     if bullet == 0:
         pass
     log.debug(
-        f"玩家 {player.name} 开枪, 子弹 {'实弹' if bullet == 1 else '空包弹'}, 生命 {player.life}"
+        f"玩家 {player.name} 对 {target.name} 开枪, 子弹 {'实弹' if bullet == 1 else '空包弹'}, 生命 {player.life}"
     )
     log.debug(f"剩余子弹: {round.gun}")
-    return
+    return bullet
 
 
 def UseHhandcuffs(player: PlayerInit, round: RoundInit, target: PlayerInit):
