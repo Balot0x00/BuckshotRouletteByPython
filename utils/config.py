@@ -13,10 +13,7 @@ dct_tools = {
 }
 
 
-
-
 dct_actions = {
-    "0": UseGun,
     "1": UseCiga,
     "2": UseMedicine,
     "3": UseBear,
@@ -26,11 +23,14 @@ dct_actions = {
     "7": UseSaw,
     "8": UsePhone,
     # "9": UseHhandcuffs,
-
 }
 
 
-dct_actionsv2 = {
+dct_action_other = {
     "9": UseHhandcuffs,
+}
 
+
+dct_action_all = {
+    "0": UseGun,
 }

@@ -8,28 +8,6 @@ from .GameControl import PlayerInit, RoundInit
 from .PropEffect import *
 
 
-def UseGun(player: PlayerInit, round: RoundInit):
-    """
-    使用枪
-    """
-    log.debug(f"玩家 {player.name} 开枪")
-    bullet = round.gun.pop(0)
-    if bullet == 1:
-        player.life = player.life - 1*round.gun_tag
-        # 打出翻倍伤害后, 恢复为1倍伤害
-        if round.gun_tag == 2:
-            round.gun_tag = 1
-
-
-    if bullet == 0:
-        pass
-    log.debug(
-        f"玩家 {player.name} 开枪, 子弹 {'实弹' if bullet == 1 else '空包弹'}, 生命 {player.life}"
-    )
-    log.debug(f"剩余子弹: {round.gun}")
-    return
-
-
 def UseCiga(player: PlayerInit, round: RoundInit):
     """
     使用香烟
@@ -94,7 +72,9 @@ def UseReverse(player: PlayerInit, round: RoundInit):
     log.debug(f"玩家 {player.name} 使用逆转器, 当前子弹 {round.gun}")
     return
 
+
 from .RandomSelect import RandomSelectTools
+
 
 def UseAdrenaline(player: PlayerInit, round: RoundInit):
     """
@@ -105,8 +85,6 @@ def UseAdrenaline(player: PlayerInit, round: RoundInit):
     while prop[0].split(":")[0] == "6":
         prop = RandomSelectTools(1)
 
-
-    
     player.props.append(prop[0])
     log.debug(f"玩家 {player.name} 使用肾上腺素, 获得道具 {prop}")
     return
@@ -127,7 +105,7 @@ def UsePhone(player: PlayerInit, round: RoundInit):
     8: 使用神秘电话, 查看除当前子弹外, 随机一颗子弹类型
     """
     current_bullet_len = len(round.gun)
-    random_bullet = random.randint(1, current_bullet_len-1)
+    random_bullet = random.randint(1, current_bullet_len - 1)
 
     log.info(
         f"玩家 {player.name} 使用神秘电话, 第 {random_bullet +1} 子弹为 {round.gun[random_bullet]}"
@@ -135,12 +113,31 @@ def UsePhone(player: PlayerInit, round: RoundInit):
     return
 
 
-
 # 以下道具需要选择使用对象 target
+def UseGun(player: PlayerInit, round: RoundInit, target: PlayerInit):
+    """
+    0: 使用枪
+    """
+    bullet = round.gun.pop(0)
+    if bullet == 1:
+        player.life = player.life - 1 * round.gun_tag
+        # 打出翻倍伤害后, 恢复为1倍伤害
+        if round.gun_tag == 2:
+            round.gun_tag = 1
+        # 切换操作玩家
+
+    if bullet == 0:
+        pass
+    log.debug(
+        f"玩家 {player.name} 开枪, 子弹 {'实弹' if bullet == 1 else '空包弹'}, 生命 {player.life}"
+    )
+    log.debug(f"剩余子弹: {round.gun}")
+    return
+
+
 def UseHhandcuffs(player: PlayerInit, round: RoundInit, target: PlayerInit):
     """
     9. 使用手铐
     """
     log.debug(f"玩家 {player.name} 对 {target.name} 使用手铐")
     return
-

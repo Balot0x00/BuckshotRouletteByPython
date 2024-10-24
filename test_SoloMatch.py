@@ -18,17 +18,18 @@ print(f"NPC: {npc01.life}, 道具: {npc01.props}")
 zhangsan = utils.PlayerInit(round01)
 print(f"Player: {zhangsan.life}, 道具: {zhangsan.props}")
 
-ps = [zhangsan,npc01]
+ps = [zhangsan, npc01]
 action = utils.PlayerActionsSoloMatch(ps, round01)
-print (action.currnet.name)
+print(action.currnet_player.name)
 
 # 切换玩家
 # action.ActionSwitch()
 # print (action.currnet.name)
 
 # 展示可选目标
-# lst_target = action.ShowTarget()
-# print(lst_target)
+lst_target = action.ShowTarget()
+print(lst_target)
+# action.SwitchTarget()
 
 # 使用道具
-action.UseProp("9")
+action.UseProp("0")

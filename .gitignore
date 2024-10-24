@@ -20,3 +20,4 @@ bin-release/
 # my
 __pycache__/
 *.pyc
+.vscode/

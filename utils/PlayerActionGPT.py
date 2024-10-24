@@ -34,9 +34,7 @@ class PlayerActionsGPT:
 
         if bullet == 1:
             self.update_player_life(-1)  # 生命减1
-        log.debug(
-            f"子弹 {'实弹' if bullet == 1 else '空包弹'}, 剩余子弹: {self.round.gun}"
-        )
+        log.debug(f"子弹 {'实弹' if bullet == 1 else '空包弹'}, 剩余子弹: {self.round.gun}")
 
     def UseCiga(self):
         """使用香烟"""

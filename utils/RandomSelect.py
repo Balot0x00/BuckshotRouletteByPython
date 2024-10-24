@@ -4,7 +4,7 @@ from loguru import logger as log
 
 
 def RandmonSelector(lst, k) -> list:
-    """ 
+    """
     从道具池抽取道具
     """
     # 将每个元素最多重复两次加入新列表
