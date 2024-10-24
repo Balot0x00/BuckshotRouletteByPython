@@ -22,12 +22,17 @@ ps = [zhangsan, npc01]
 action = utils.PlayerActionsSoloMatch(ps, round01)
 print(action.currnet_player.name)
 
+# 给NPC设置沉默状态
+if action.currnet_player.name == "NPC":
+    action.currnet_player.status = "slience"
+
+
 # 切换玩家
 # action.ActionSwitch()
 # print (action.currnet.name)
 
 # 展示可选目标
-lst_target = action.ShowTarget()
+lst_target = action.ShowTargetGun()
 print(lst_target)
 # action.SwitchTarget()
 

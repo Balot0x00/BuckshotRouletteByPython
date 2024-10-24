@@ -139,5 +139,10 @@ def UseHhandcuffs(player: PlayerInit, round: RoundInit, target: PlayerInit):
     """
     9. 使用手铐
     """
+    if target.status == "slience":
+        log.warning(f"玩家 {target.name} 已经被手铐")
+        return False
+
     log.debug(f"玩家 {player.name} 对 {target.name} 使用手铐")
-    return
+    target.status = "slience"
+    return True

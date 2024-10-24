@@ -51,10 +51,9 @@ class GunInit:
     """
 
     def __init__(self):
-        props_num = RandomToolNum()
+        self.props_num = RandomToolNum()
         self.gun = TheGun()
-        self.props = RandomSelectTools(props_num)
-        log.debug(f"发放道具 {self. props}")
+        # self.props = RandomSelectTools(props_num)
 
 
 class RoundInit:
@@ -65,8 +64,9 @@ class RoundInit:
     def __init__(self):
         gun = GunInit()
         self.gun = gun.gun
-        # self.props = RandomSelectTools(gun.tools_num)
-        self.props = gun.props
+        # self.props = RandomSelectTools(gun.props_num)
+        # self.props = gun.props
+        self.props_num = gun.props_num
         self.max = RandomLife()
         self.life = self.max
         self.gun_tag = 1
@@ -77,8 +77,10 @@ class PlayerInit:
         self.id: int = 1
         self.name: str = "playername"
         self.life = round.life
-        self.props = round.props
-        # self.round = round
+        self.props = RandomSelectTools(round.props_num)
+
+        # 状态标志位 alive slience dead
+        self.status = "alive"
 
 
 class NPCInit(PlayerInit):
@@ -90,8 +92,8 @@ class NPCInit(PlayerInit):
         self.id: int = 0
         self.name: str = "NPC"
         self.life = round.life
-        self.props = round.props
-        # self.round = round
+        self.props = RandomSelectTools(round.props_num)
+        self.status = "alive"
 
 
 from .config import dct_actions
@@ -115,7 +117,6 @@ class PlayerActions:
     def NewGun(self, player: PlayerInit, round: RoundInit):
         """
         设置新弹夹, 继承上一个弹夹的剩余道具
-
         """
         log.info(f"重新填充弹夹")
         newgun = GunInit()

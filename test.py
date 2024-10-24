@@ -1,14 +1,19 @@
-def func01():
-    return False
-
-def func02():
-    return True
+class obja:
+    def __init__(self):
+        self.a = 1
 
 
-sw = {
-    1: func01,
-    2: func02,
-}
+class objb:
+    def __init__(self, obj_a: obja):
+        self.b = 2
+        self.obj_a = obj_a  # 保存 obja 的实例
 
-res  = sw.get(1)()
-print(res)
+    def func(self):
+        print(self.obj_a.a)  # 访问 obja 实例的属性 a
+        print(self.b)  # 访问 objb 的属性 b
+
+
+# 示例用法
+a_instance = obja()
+b_instance = objb(a_instance)
+b_instance.func()
