@@ -4,6 +4,7 @@ from .RandomSelect import *
 
 # from .Player import PlayerInit
 from .ActionControl import *
+from .ConsolePrint import *
 
 from .config import dct_tools
 

@@ -97,7 +97,7 @@ class NPCInit(PlayerInit):
 
 
 from .config import dct_actions
-from .LogControl import PrintStatus
+from .ConsolePrint import PrintStatus
 
 
 class PlayerActions:
