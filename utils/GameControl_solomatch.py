@@ -29,7 +29,7 @@ class PlayerActionsSoloMatch:
         self.round = round  # 当前回合
         # 切换标志位
         self.switch = 0
-        self.currnet_player = self.ActionSwitch()
+        self.current_player = self.ActionSwitch()
 
     def GunNew(self):
         log.info(f"重新填充弹夹")
@@ -51,34 +51,37 @@ class PlayerActionsSoloMatch:
         if len(self.round.gun) == 0:
             self.GunNew()
 
-    def LifeCheck(self):
+    def CheckPlayerState(self) -> bool:
         """
-        检查当前玩家生命状态
+        检查当前玩家生命状态和行动状态
+        :return: 是否可以继续行动
         """
+        if self.current_player.life <= 0:
+            log.warning(f"玩家 {self.current_player.name} 死亡")
+            self.current_player.status = "dead"
+            self.ActionSwitch()
+            return False
+        elif self.current_player.status in ["dead", "slience"]:
+            log.warning(
+                f"玩家 {self.current_player.name} 行动无效 ({self.current_player.status})"
+            )
+            self.ActionSwitch()
+            return False
+        return True
+
+    def CheckVirtoy(self):
+        """
+        对局状态检查, 是否有玩家胜出
+        """
+        from collections import Counter
+
         result = False
-        if self.currnet_player.life <= 0:
-            log.warning(f"玩家 {self.currnet_player.name} 死亡")
-            self.currnet_player.status = "dead"
-            # self.players.remove(self.currnet)
-            self.currnet_player = self.ActionSwitch()
-        else:
+        lst_life = [player.life for player in self.players]
+        vitory = Counter(lst_life)
+        log.debug(f"玩家存活状态 {vitory}")
+        if vitory[1] == 1:
             result = True
-        return result
 
-    def ActionCheck(self):
-        """
-        检查当前玩家行动状态,
-        """
-        result = True
-        if self.currnet_player.status == "dead":
-            log.warning(f"玩家 {self.currnet_player.name} 已死亡")
-            self.currnet_player = self.ActionSwitch()
-            result = False
-
-        elif self.currnet_player.status == "slience":
-            log.warning(f"玩家 {self.currnet_player.name} 已沉默")
-            self.currnet_player = self.ActionSwitch()
-            result = False
         return result
 
     def ActionSwitch(self) -> PlayerInit:
@@ -92,51 +95,48 @@ class PlayerActionsSoloMatch:
         if self.switch >= len(self.players):
             self.switch = 0
         log.debug(f"切换标志位 {self.switch}")
-        self.currnet_player = current_player
+        self.current_player = current_player
 
         return current_player
 
-    def ShowTargetUnSlience(self) -> List[int]:
+    def ShowTarget(self, filter_status: List[str]) -> List[int]:
         """
-        展示非沉默目标, 不包括当前玩家
+        根据筛选条件展示目标
+        alive: 返回非沉默死亡玩家, 使用9号道具
+        alive, slience: 返回非死亡玩家, 使用0号道具
         """
-        lst_unslience_players = [
-            self.players.index(player)
+        current_player = self.players.index(self.current_player)
+
+        lst_target = [
+            self.players.index(player) + 1
             for player in self.players
-            if player.status == "alive"
+            if player.status in filter_status
         ]
-        current_player = self.players.index(self.currnet_player)
-        lst_unslience_players.pop(current_player)
-        return lst_unslience_players
+        lst_target.remove(current_player + 1)
+        if "slience" in filter_status:
+            lst_target.insert(0, 0)
+        print(f"可选玩家 {lst_target}")
+        return lst_target
 
-    def ShowTargetGun(self) -> List[int]:
-        """
-        展示当前alive alience, 0 为当前玩家
-
-        [0, 1, 3]
-        """
-        lst_alive_players = [
-            self.players.index(player)
-            for player in self.players
-            if player.status == "alive" or player.status == "slience"
-        ]
-        current_player = self.players.index(self.currnet_player)
-        lst_alive_players.pop(current_player)
-        lst_alive_players.insert(0, 0)
-        log.debug(f"可选玩家 {lst_alive_players}")
-
-        return lst_alive_players
-
-    def SwitchTarget(self) -> PlayerInit:
+    def SwitchTarget(self, filter_status: List[str]) -> PlayerInit:
         """
         切换指定目标
         """
+        lst_target = self.ShowTarget(filter_status)
         target_input = int(input(f"请选择目标: "))
-        while target_input not in self.ShowTargetGun():
+        while target_input not in lst_target:
             log.warning(f"目标无效, 请重新选择")
             target_input = int(input(f"请选择目标: "))
 
-        target = self.players[int(target_input)]
+        # 恢复偏移
+        if not target_input == 0:
+            num_offset = target_input - 1
+            log.debug(f"恢复偏移 {num_offset}")
+            target = self.players[int(num_offset)]
+        else:
+            num_offset = 0
+            target = self.current_player
+
         log.debug(f"目标 {target.name}")
         return target
 
@@ -148,31 +148,31 @@ class PlayerActionsSoloMatch:
         action_other = dct_action_other.get(p_slelect)
         action_all = dct_action_all.get(p_slelect)
 
-        if self.ActionCheck():
-            if callable(action) and self.ActionCheck():
+        if self.CheckPlayerState():
+            if callable(action):
                 log.debug(f"道具有效")
-                action(self.currnet_player, self.round)
+                action(self.current_player, self.round)
 
             elif callable(action_other):
                 log.debug(f"交互道具, 对非当前 + alive 玩家生效")
-                target_obj = self.SwitchTarget()
-                action_other(self.currnet_player, self.round, target_obj)
+                target_obj = self.SwitchTarget(["alive"])
+                action_other(self.current_player, self.round, target_obj)
 
             elif callable(action_all):
                 log.debug(f"使用0号道具, 对alive slience生效")
-                target_obj = self.SwitchTarget()
-                buttle = action_all(self.currnet_player, self.round, target_obj)
+                target_obj = self.SwitchTarget(["alive", "slience"])
+                buttle = action_all(self.current_player, self.round, target_obj)
 
                 # 自空枪判断
-                if buttle == 0 and target_obj == self.currnet_player:
-                    log.info(f"玩家 {self.currnet_player.name} 自空枪")
+                if buttle == 0 and target_obj == self.current_player:
+                    log.info(f"玩家 {self.current_player.name} 自空枪")
                 else:
                     self.ActionSwitch()
             else:
                 log.warning(f"道具无效")
         else:
-            log.warning(f"玩家 {self.currnet_player.name} 行动无效")
+            log.warning(f"玩家 {self.current_player.name} 行动无效")
 
         # 重置slience 状态
-        if self.currnet_player.status == "slience":
-            self.currnet_player.status = "alive"
+        if self.current_player.status == "slience":
+            self.current_player.status = "alive"

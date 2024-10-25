@@ -20,16 +20,16 @@ print(f"Player: {zhangsan.life}, 道具: {zhangsan.props}")
 
 ps = [zhangsan, npc01]
 action = utils.PlayerActionsSoloMatch(ps, round01)
-print(action.currnet_player.name)
+print(action.current_player.name)
 
 # 给NPC设置沉默状态
-if action.currnet_player.name == "NPC":
-    action.currnet_player.status = "slience"
+# if action.currnet_player.name == "NPC":
+#     action.currnet_player.status = "slience"
 
 while True:
     action.GunCheck()
-    action.ActionCheck()
-    action.LifeCheck()
-    print(f"当前行动:  {action.currnet_player.name}")
+    if not action.CheckPlayerState() and not action.CheckVirtoy():
+        break
+    print(f"当前行动:  {action.current_player.name}")
     num = input("选择道具")
     action.UseProps(num)
