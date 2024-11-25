@@ -1,6 +1,6 @@
-lst = [1, 0, 0, 0, 0]
+lst = ["1", "0", "0", "0", "0"]
 
 from collections import Counter
 
 r = Counter(lst)
-print(r)
+print(r["1"])

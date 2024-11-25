@@ -1,7 +1,7 @@
 import random
 from loguru import logger as log
 
-from .RandomSelect import RandomSelectTools
+from .RandomGenter import RandomSelectTools
 
 
 def RandomToolNum() -> int:

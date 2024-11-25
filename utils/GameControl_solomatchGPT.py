@@ -5,7 +5,7 @@ from .GameControl import PlayerInit, RoundInit, GunInit
 from .PropEffect import *
 from .config import dct_actions, dct_action_other, dct_action_all
 from .GameControl import PlayerActions
-from .RandomSelect import RandomSelectTools
+from .RandomGenter import RandomSelectTools
 
 
 class PlayerActionsSoloMatch:
