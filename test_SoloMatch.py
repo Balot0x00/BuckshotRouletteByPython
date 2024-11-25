@@ -22,9 +22,6 @@ ps = [zhangsan, npc01]
 action = utils.PlayerActionsSoloMatch(ps, round01)
 print(action.current_player.name)
 
-# 给NPC设置沉默状态
-# if action.currnet_player.name == "NPC":
-#     action.currnet_player.status = "slience"
 
 while True:
     action.GunCheck()

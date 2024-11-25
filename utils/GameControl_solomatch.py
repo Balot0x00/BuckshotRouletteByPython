@@ -56,6 +56,8 @@ class PlayerActionsSoloMatch:
         检查当前玩家生命状态和行动状态
         :return: 是否可以继续行动
         """
+        log.debug(f"检查玩家 {self.current_player.name} 状态 {self.current_player.status}")
+
         if self.current_player.life <= 0:
             log.warning(f"玩家 {self.current_player.name} 死亡")
             self.current_player.status = "dead"
@@ -173,6 +175,6 @@ class PlayerActionsSoloMatch:
         else:
             log.warning(f"玩家 {self.current_player.name} 行动无效")
 
-        # 重置slience 状态
+        # 重置slience 状态 !!!!!!!!!!!!!!!!!! 有问题, 当前已经切换到下一位了, 现进行了状态重置
         if self.current_player.status == "slience":
             self.current_player.status = "alive"
