@@ -12,7 +12,6 @@ from .RandomGenter import RandomSelectTools
 from .util import UserInput
 
 
-
 # Python < 3.9 版本中不能直接使用 list[PlayerInit]作为类型注解
 from typing import List
 
@@ -32,6 +31,14 @@ class PlayerActionsSoloMatch:
         # 切换标志位
         self.switch = 0
         self.current_player = players[0]
+
+    def GetPropList(self) -> List[str]:
+        """
+        获取当前玩家的道具列表, 追加 0 号道具
+        """
+        lt = [tool_num.split(":")[0] for tool_num in self.current_player.props]
+        lt.insert(0, "0")
+        return lt
 
     def GunNew(self):
         log.info(f"重新填充弹夹")
@@ -109,7 +116,7 @@ class PlayerActionsSoloMatch:
         log.debug(f"切换标志位: player {self.switch}")
         self.current_player = self.players[self.switch]
 
-        # return 
+        # return
 
     def PlayersShow(self, filter_status: List[str]) -> List[int]:
         """
@@ -130,14 +137,12 @@ class PlayerActionsSoloMatch:
         print(f"可选玩家 {lst_target}")
         return lst_target
 
-
     def PlayersSelect(self, filter_status: List[str]) -> PlayerInit:
         """
         切换指定目标,
         """
         lst_target = self.PlayersShow(filter_status)
         target_input = int(UserInput("选择目标",lst_target))
-
 
         # 恢复偏移
         if not target_input == 0:

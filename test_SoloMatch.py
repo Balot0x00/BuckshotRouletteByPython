@@ -30,5 +30,5 @@ while True:
     #     break
     utils.PrintRoundInfo(ps)
     print(f"当前行动:  {action.current_player.name}")
-    num = utils.UserInput("请输入道具编号:",[tool_num.split(':')[0] for tool_num in action.current_player.props])
+    num = utils.UserInput("请输入道具编号:",action.GetPropList())
     action.UseProps(num)
