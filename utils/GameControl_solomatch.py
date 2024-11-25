@@ -159,7 +159,10 @@ class PlayerActionsSoloMatch:
         for tool in self.current_player.props:
             if tool_num in tool:
                 break
-        self.current_player.props.remove(tool)
+        try:
+            self.current_player.props.remove(tool)
+        except:
+            log.warning(f"道具不存在")
 
     def UseProps(self, p_slelect: str):
         """

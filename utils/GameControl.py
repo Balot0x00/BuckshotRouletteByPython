@@ -93,7 +93,7 @@ class NPCInit(PlayerInit):
         self.name: str = "NPC"
         self.life = round.life
         self.props = RandomSelectTools(round.props_num)
-        self.status = "slience"
+        self.status = "alive"
 
 
 from .config import dct_actions
