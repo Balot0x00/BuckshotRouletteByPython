@@ -4,8 +4,10 @@
 
 import random
 from collections import Counter
+from typing import List
 from loguru import logger as log
-
+# 
+from .config import dct_tools
 
 def RandomLife() -> int:
     """
@@ -46,24 +48,11 @@ def RandmonSelector(lst, k) -> list:
     return selection
 
 
-def RandomSelectTools(k: int):
+def RandomSelectTools(k: int) -> List[str]:
     """
     随机发放道具 1-5
     :return: {num:tool}
     """
-    # log.debug(f"抽取道具数量:{k}")
-    dct_tools = {
-        1: "香烟",
-        2: "过期药品",
-        3: "啤酒",
-        4: "放大镜",
-        5: "逆转器",
-        6: "肾上腺素",
-        7: "短锯",
-        8: "神秘电话",
-        9: "手铐",
-    }
-    # k = random.randint(1, 5)
     r = RandmonSelector(list(dct_tools.keys()), k)
 
     # 生成多个道具时, 可能出现重复的道具, 改用list字典表示
