@@ -4,12 +4,13 @@
 """
 
 from loguru import logger as log
-from .GameControl import PlayerInit, RoundInit, GunInit
+from .GameControl import RoundInit, GunInit
 from .PropEffect import *
 from .config import dct_actions, dct_action_other, dct_action_all
 from .GameControl import PlayerActions
 from .RandomGenter import RandomSelectTools
 from .util import UserInput
+from .InitPlayer import PlayerInit
 
 
 # Python < 3.9 版本中不能直接使用 list[PlayerInit]作为类型注解

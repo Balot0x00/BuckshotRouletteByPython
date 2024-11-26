@@ -29,24 +29,6 @@ def RandomToolNum() -> int:
     return result
 
 
-def RandomGun():
-    """
-    准备弹夹
-    总计8发子弹, 随机填充n发, 空包弹 0, 实弹 1 当前排列 2
-    实弹 1-4
-    """
-    num = random.randint(2, 8)
-    num_ones = random.randint(1, int(num / 2))
-    # log.debug(f"子弹总数: {num} 实弹数量: {num_ones}")
-    # 创建包含 num_ones 个 1 和 8 - num_ones 个 0 的列表
-    lst = [1] * num_ones + [0] * (num - num_ones)
-    # log.debug(f"生成子弹lst: {lst}")
-
-    # 打乱列表顺序，使 1 和 0 随机分布
-    result = random.shuffle(lst)
-    log.debug(f"子弹总数: {num} 实弹数量: {num_ones} 子弹分布: {lst}")
-    return lst
-
 
 def RandmonSelector(lst, k) -> list:
     """
@@ -89,3 +71,21 @@ def RandomSelectTools(k: int):
     for i in r:
         result.append(str(i) + ":" + dct_tools[i])
     return result
+
+def RandomGunLoad():
+    """
+    准备弹夹
+    总计8发子弹, 随机填充n发, 空包弹 0, 实弹 1 当前排列 2
+    实弹 1-4
+    """
+    num = random.randint(2, 8)
+    num_ones = random.randint(1, int(num / 2))
+    # log.debug(f"子弹总数: {num} 实弹数量: {num_ones}")
+    # 创建包含 num_ones 个 1 和 8 - num_ones 个 0 的列表
+    lst = [1] * num_ones + [0] * (num - num_ones)
+    # log.debug(f"生成子弹lst: {lst}")
+
+    # 打乱列表顺序，使 1 和 0 随机分布
+    result = random.shuffle(lst)
+    log.debug(f"子弹总数: {num} 实弹数量: {num_ones} 子弹分布: {lst}")
+    return lst

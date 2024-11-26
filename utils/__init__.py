@@ -15,3 +15,7 @@ from .GameControl_solomatch import *
 
 from .ConsolePrint import *
 from .util import UserInput
+
+
+from .InitGame import *
+from .InitPlayer import *
