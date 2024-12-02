@@ -1,14 +1,10 @@
-from .InitGame import (
-    RoundInit,
-    RandomSelectTools,
-    RandomToolNum,
-    RandomGunLoad,
-    RandomLife,
-)
+from utils.Base import BaseRound
+from utils.RandomGenter import RandomSelectTools
 
 
 class PlayerInit:
-    def __init__(self, round: RoundInit):
+
+    def __init__(self, round: BaseRound):
         self.id: int = 1
         self.name: str = "playername"
         self.life = round.life
@@ -25,7 +21,7 @@ class NPCInit(object):
     NPC 初始化, NPC单独初始化, 当前NPC 的行动完全随机, 不获取round内的信息
     """
 
-    def __init__(self, round: RoundInit):
+    def __init__(self, round: BaseRound):
         self.id: int = 0
         self.name: str = "NPC"
         self.life = round.life

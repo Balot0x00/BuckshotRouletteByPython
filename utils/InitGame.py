@@ -1,10 +1,10 @@
 from loguru import logger as log
 
-from .RandomGenter import RandomSelectTools, RandomToolNum
-from .RandomGenter import RandomGunLoad, RandomLife
+from utils.RandomGenter import RandomSelectTools, RandomToolNum
+from utils.RandomGenter import RandomGunLoad, RandomLife
+from utils.Base import BaseGun, BaseRound
 
-
-class GunInit:
+class GunInit(BaseGun):
     """
     一次 gun 的初始化，生成道具组和弹夹
     """
@@ -14,7 +14,7 @@ class GunInit:
         self.gun = RandomGunLoad()
 
 
-class RoundInit:
+class RoundInit(BaseRound):
     """
     一次回合的初始化, 绑定弹夹信息, 设定血量上限
     """
