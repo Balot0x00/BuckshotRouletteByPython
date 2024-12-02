@@ -148,24 +148,3 @@ def UseHhandcuffs(player: BasePlayer, round: BaseRound, target: BasePlayer):
 
 def TestFunc():
     return "call test func"
-
-dct_actions = {
-    "1": UseCiga,
-    "2": UseMedicine,
-    "3": UseBear,
-    "4": UseMagnifier,
-    "5": UseReverse,
-    "7": UseSaw,
-    "8": UsePhone,
-}
-
-
-dct_action_other = {
-    "9": UseHhandcuffs,
-}
-
-
-dct_action_all = {
-    "6": UseAdrenaline,
-    "0": UseGun,
-}

@@ -6,7 +6,7 @@
 from loguru import logger as log
 from utils.GameControl import RoundInit, GunInit
 from utils.PropEffect import *
-from utils.DctAction import dct_actions, dct_action_other, dct_action_all
+from utils.DctProps import dct_actions, dct_action_other, dct_action_all
 from utils.RandomGenter import RandomSelectTools
 from utils.util import UserInput
 from utils.InitPlayer import PlayerInit

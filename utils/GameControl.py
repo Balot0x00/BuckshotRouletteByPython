@@ -3,7 +3,6 @@ from loguru import logger as log
 
 from utils.InitPlayer import PlayerInit
 from utils.InitGame import RoundInit, GunInit
-from utils.DctAction import dct_actions,dct_action_all
 from utils.ConsolePrint import PrintStatus
 
 class PlayerActions:
@@ -68,6 +67,8 @@ class PlayerActions:
         """
         使用道具
         """
+        from utils.DctProps import dct_actions,dct_action_all
+
         # 使用道具前, 玩家状态检查
         if not self.LifeCheck():
             return
