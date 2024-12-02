@@ -36,7 +36,7 @@ class PlayerActionsSoloMatch:
 
     def PlayerReNumber(self):
         """
-        对玩家局内编号
+        对玩家局内编号, 玩家赋予1号, NPC赋予末尾号
         """
         for i, player in enumerate(self.players):
             player.round_id = str(i+1)
@@ -129,20 +129,20 @@ class PlayerActionsSoloMatch:
 
     def PlayersShow(self, filter_status: List[str]) -> List[int]:
         """
-        根据筛选条件展示目标, 0号玩家为当前玩家, 其他玩家从1开始展示
+        根据筛选条件展示目标
         alive: 返回非沉默死亡玩家, 使用9号道具
         alive, slience: 返回非死亡玩家, 使用0号道具
         """
-        current_player = self.players.index(self.current_player)
+        # current_player = self.players.index(self.current_player)
 
         lst_target = [
-            self.players.index(player) + 1
+            player.round_id
             for player in self.players
             if player.status in filter_status
         ]
-        lst_target.remove(current_player + 1)
+        lst_target.remove(self.current_player.round_id)
         if "slience" in filter_status:
-            lst_target.insert(0, 0)
+            lst_target.insert(0, "0")
         print(f"可选玩家 {lst_target}")
         return lst_target
 
