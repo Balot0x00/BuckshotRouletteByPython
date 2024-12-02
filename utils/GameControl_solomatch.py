@@ -153,10 +153,10 @@ class PlayerActionsSoloMatch:
         lst_target = self.PlayersShow(filter_status)
         target_input = int(UserInput("选择目标", lst_target))
 
-        # 恢复偏移
+        # 使用偏移后的数组下标表示目标玩家, 或遍历rid, 判断与输入一致的玩家
         if not target_input == 0:
             num_offset = target_input - 1
-            log.debug(f"恢复偏移 {num_offset}")
+            log.debug(f"非0, 下标偏移: {num_offset}")
             target = self.players[int(num_offset)]
         else:
             num_offset = 0
