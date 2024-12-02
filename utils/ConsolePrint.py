@@ -1,5 +1,5 @@
 from loguru import logger as log
-from .GameControl import PlayerInit
+from utils.InitPlayer import PlayerInit
 
 
 def PrintStatus(player: PlayerInit):

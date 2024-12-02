@@ -4,13 +4,12 @@
 """
 
 from loguru import logger as log
-from .GameControl import RoundInit, GunInit
-from .PropEffect import *
-from .config import dct_actions, dct_action_other, dct_action_all
-from .GameControl import PlayerActions
-from .RandomGenter import RandomSelectTools
-from .util import UserInput
-from .InitPlayer import PlayerInit
+from utils.GameControl import RoundInit, GunInit
+from utils.PropEffect import *
+from utils.DctAction import dct_actions, dct_action_other, dct_action_all
+from utils.RandomGenter import RandomSelectTools
+from utils.util import UserInput
+from utils.InitPlayer import PlayerInit
 
 
 # Python < 3.9 版本中不能直接使用 list[PlayerInit]作为类型注解
@@ -22,16 +21,25 @@ class PlayerActionsSoloMatch:
 
     def __init__(self, players: List[PlayerInit], round: RoundInit) -> None:
         """
-        初始化玩家行动管理类。
+        初始化玩家行动管理类。对玩家进行局内编号
 
         :param players: 包含多个 PlayerInit 对象的列表
         :param round: 当前回合的 RoundInit 对象
         """
         self.players = players  # 玩家列表
+        self.PlayerReNumber()
         self.round = round  # 当前回合
-        # 切换标志位
-        self.switch = 0
+        # 当前行动玩家数组下标
+        self.action_num = 0
+        #  从1号玩家开始行动
         self.current_player = players[0]
+
+    def PlayerReNumber(self):
+        """
+        对玩家局内编号
+        """
+        for i, player in enumerate(self.players):
+            player.round_id = str(i+1)
 
     def GetPropList(self) -> List[str]:
         """
@@ -75,7 +83,7 @@ class PlayerActionsSoloMatch:
             log.warning(f"玩家 {self.current_player.name} 死亡")
             self.current_player.status = "dead"
             # self.ActionSwitch()
-            result_check =  False
+            result_check = False
         elif self.current_player.status in ["dead", "slience"]:
             log.warning(
                 f"玩家 {self.current_player.name} 行动无效: {self.current_player.status}"
@@ -84,7 +92,7 @@ class PlayerActionsSoloMatch:
             # slience 状态切换
             if self.current_player.status == "slience":
                 self.current_player.status = "alive"
-            result_check =  False
+            result_check = False
 
         if result_check == False:
             self.ActionSwitch()
@@ -108,14 +116,14 @@ class PlayerActionsSoloMatch:
         """
         切换行动玩家
         """
-        log.debug(f"当前标志位: player {self.switch}")
+        log.debug(f"当前玩家数组下标: players {self.action_num}")
 
         # current_player = self.players[self.switch]
-        self.switch += 1
-        if self.switch >= len(self.players):
-            self.switch = 0
-        log.debug(f"切换标志位: player {self.switch}")
-        self.current_player = self.players[self.switch]
+        self.action_num += 1
+        if self.action_num >= len(self.players):
+            self.action_num = 0
+        log.debug(f"切换下标: players {self.action_num}")
+        self.current_player = self.players[self.action_num]
 
         # return
 
@@ -143,7 +151,7 @@ class PlayerActionsSoloMatch:
         切换指定目标,
         """
         lst_target = self.PlayersShow(filter_status)
-        target_input = int(UserInput("选择目标",lst_target))
+        target_input = int(UserInput("选择目标", lst_target))
 
         # 恢复偏移
         if not target_input == 0:

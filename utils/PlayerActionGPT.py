@@ -4,8 +4,8 @@
 """
 
 from loguru import logger as log
-from .GameControl import PlayerInit, RoundInit
-from .PropEffect import *
+from utils import PlayerInit, RoundInit
+from utils import *
 
 # from .config import dct_actions
 

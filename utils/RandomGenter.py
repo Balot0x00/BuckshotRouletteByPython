@@ -6,8 +6,10 @@ import random
 from collections import Counter
 from typing import List
 from loguru import logger as log
-# 
-from .config import dct_tools
+
+#
+from utils.DctProps import dct_props
+
 
 def RandomLife() -> int:
     """
@@ -31,7 +33,6 @@ def RandomToolNum() -> int:
     return result
 
 
-
 def RandmonSelector(lst, k) -> list:
     """
     从道具池抽取道具
@@ -53,13 +54,14 @@ def RandomSelectTools(k: int) -> List[str]:
     随机发放道具 1-5
     :return: {num:tool}
     """
-    r = RandmonSelector(list(dct_tools.keys()), k)
+    r = RandmonSelector(list(dct_props.keys()), k)
 
     # 生成多个道具时, 可能出现重复的道具, 改用list字典表示
     result = []
     for i in r:
-        result.append(str(i) + ":" + dct_tools[i])
+        result.append(str(i) + ":" + dct_props[i])
     return result
+
 
 def RandomGunLoad():
     """

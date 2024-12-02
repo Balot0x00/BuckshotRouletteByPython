@@ -1,11 +1,11 @@
 from loguru import logger as log
 from typing import List
 from collections import Counter
-from .GameControl import PlayerInit, RoundInit, GunInit
-from .PropEffect import *
-from .config import dct_actions, dct_action_other, dct_action_all
-from .GameControl import PlayerActions
-from .RandomGenter import RandomSelectTools
+from ..utils.GameControl import PlayerInit, RoundInit, GunInit
+from ..utils.PropEffect import *
+from utils.DctProps import dct_actions, dct_action_other, dct_action_all
+from ..utils.GameControl import PlayerActions
+from ..utils.RandomGenter import RandomSelectTools
 
 
 class PlayerActionsSoloMatch:

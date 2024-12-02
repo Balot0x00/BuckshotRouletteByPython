@@ -1,12 +1,10 @@
 import random
 from loguru import logger as log
 
-from .InitPlayer import PlayerInit
-from .InitGame import  RoundInit, GunInit
-
-from .config import dct_actions
-from .ConsolePrint import PrintStatus
-
+from utils.InitPlayer import PlayerInit
+from utils.InitGame import RoundInit, GunInit
+from utils.DctAction import dct_actions,dct_action_all
+from utils.ConsolePrint import PrintStatus
 
 class PlayerActions:
     """
@@ -31,7 +29,7 @@ class PlayerActions:
         round.gun = newgun.gun
         # player.round = newgun.gun
         old_props = player.props
-        new_props = old_props + newgun.props
+        new_props = old_props + player.props
         player.props = new_props[0:8]
 
     def GunCheck(self):
@@ -50,10 +48,10 @@ class PlayerActions:
         return True
 
     def PropsCheck(self, num):
-        props_key = [a.split(":")[0] for a in self.player.props]
+        props_key = [str(a.split(":")[0]) for a in self.player.props]
         if num == "0":
             return True
-        if num not in props_key:
+        if not num  in props_key:
             log.warning(f"玩家 {self.player.name} 使用道具 {num} 无效")
             return False
 
@@ -61,6 +59,7 @@ class PlayerActions:
 
     def PropsRemove(self, num):
         for a in self.player.props:
+
             if num in a:
                 self.player.props.remove(a)
         return
@@ -76,8 +75,12 @@ class PlayerActions:
             return
 
         action = dct_actions.get(num, None)
+        action_2 = dct_action_all.get(num, None)
         if callable(action):
             action(self.player, self.round)
+
+        if callable(action_2):
+            action_2(self.player, self.round)
 
         else:
             log.warning(f"玩家 {self.player.name} 使用道具 {num} 无效")

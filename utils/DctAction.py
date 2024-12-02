@@ -1,14 +1,14 @@
 """
 根据道具效果对玩家状态进行修改
 """
-
+import random
 from loguru import logger as log
 
-from .GameControl import PlayerInit, RoundInit
-from .PropEffect import *
+from utils.Base import BaseRound, BasePlayer
+from utils.PropEffect import TheCiga, TheMedicine
 
 
-def UseCiga(player: PlayerInit, round: RoundInit):
+def UseCiga(player: BasePlayer, round: BaseRound):
     """
     使用香烟
     """
@@ -19,7 +19,7 @@ def UseCiga(player: PlayerInit, round: RoundInit):
     return player
 
 
-def UseMedicine(player: PlayerInit, round: RoundInit):
+def UseMedicine(player: BasePlayer, round: BaseRound):
     """
     使用过期药品
     """
@@ -36,7 +36,7 @@ def UseMedicine(player: PlayerInit, round: RoundInit):
     return player
 
 
-def UseBear(player: PlayerInit, round: RoundInit):
+def UseBear(player: BasePlayer, round: BaseRound):
     """
     3: 使用啤酒, 退出当前子弹
     """
@@ -48,7 +48,7 @@ def UseBear(player: PlayerInit, round: RoundInit):
     return
 
 
-def UseMagnifier(player: PlayerInit, round: RoundInit):
+def UseMagnifier(player: BasePlayer, round: BaseRound):
     """
     4: 使用放大镜, 查看当前子弹类型
     """
@@ -58,7 +58,7 @@ def UseMagnifier(player: PlayerInit, round: RoundInit):
     return
 
 
-def UseReverse(player: PlayerInit, round: RoundInit):
+def UseReverse(player: BasePlayer, round: BaseRound):
     """
     5: 使用逆转器, 将当前子弹类型进行逆转
 
@@ -73,10 +73,10 @@ def UseReverse(player: PlayerInit, round: RoundInit):
     return
 
 
-from .RandomGenter import RandomSelectTools
 
 
-def UseAdrenaline(player: PlayerInit, round: RoundInit):
+def UseAdrenaline(player: BasePlayer, round: BaseRound):
+    from utils.RandomGenter import RandomSelectTools
     """
     6: 使用肾上腺素, 获取对方一种道具, 但不能是6
     """
@@ -90,7 +90,7 @@ def UseAdrenaline(player: PlayerInit, round: RoundInit):
     return
 
 
-def UseSaw(player: PlayerInit, round: RoundInit):
+def UseSaw(player: BasePlayer, round: BaseRound):
     """
     7: 使用短锯, 当前子弹伤害翻倍
     修改gun_tag 标志位为2, 伤害翻倍
@@ -100,7 +100,7 @@ def UseSaw(player: PlayerInit, round: RoundInit):
     return
 
 
-def UsePhone(player: PlayerInit, round: RoundInit):
+def UsePhone(player: BasePlayer, round: BaseRound):
     """
     8: 使用神秘电话, 查看除当前子弹外, 随机一颗子弹类型
     """
@@ -114,7 +114,7 @@ def UsePhone(player: PlayerInit, round: RoundInit):
 
 
 # 以下道具需要选择使用对象 target
-def UseGun(player: PlayerInit, round: RoundInit, target: PlayerInit):
+def UseGun(player: BasePlayer, round: BaseRound, target: BasePlayer):
     """
     0: 使用枪
     """
@@ -134,7 +134,7 @@ def UseGun(player: PlayerInit, round: RoundInit, target: PlayerInit):
     return bullet
 
 
-def UseHhandcuffs(player: PlayerInit, round: RoundInit, target: PlayerInit):
+def UseHhandcuffs(player: BasePlayer, round: BaseRound, target: BasePlayer):
     """
     9. 使用手铐
     """
@@ -145,3 +145,27 @@ def UseHhandcuffs(player: PlayerInit, round: RoundInit, target: PlayerInit):
     log.debug(f"玩家 {player.name} 对 {target.name} 使用手铐")
     target.status = "slience"
     return True
+
+def TestFunc():
+    return "call test func"
+
+dct_actions = {
+    "1": UseCiga,
+    "2": UseMedicine,
+    "3": UseBear,
+    "4": UseMagnifier,
+    "5": UseReverse,
+    "7": UseSaw,
+    "8": UsePhone,
+}
+
+
+dct_action_other = {
+    "9": UseHhandcuffs,
+}
+
+
+dct_action_all = {
+    "6": UseAdrenaline,
+    "0": UseGun,
+}

@@ -18,6 +18,7 @@ npc01 = utils.NPCInit(round01)
 zhangsan = utils.PlayerInit(round01)
 # print(f"Player: {zhangsan.life}, 道具: {zhangsan.props}")
 
+# 装填玩家, NPC置于最后, 玩家优先行动
 ps = [zhangsan, npc01]
 action = utils.PlayerActionsSoloMatch(ps, round01)
 # print(action.current_player.name)
