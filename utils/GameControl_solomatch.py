@@ -194,6 +194,9 @@ class PlayerActionsSoloMatch:
         elif callable(action_other):
             log.debug(f"交互道具, 对非当前 + alive 玩家生效")
             target_obj = self.PlayersSelect(["alive"])
+            if len(target_obj) ==0:
+                log.warning(f"无有效目标")
+                return
             action_other(self.current_player, self.round, target_obj)
             self.RemoveTool(p_slelect)
 
@@ -207,6 +210,5 @@ class PlayerActionsSoloMatch:
                 log.info(f"玩家 {self.current_player.name} 自空枪")
             else:
                 self.ActionSwitch()
-
         else:
             log.warning(f"道具无效")
