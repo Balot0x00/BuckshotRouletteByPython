@@ -119,13 +119,13 @@ def UseGun(player: BasePlayer, round: BaseRound, target: BasePlayer):
     0: 使用枪
     """
     bullet = round.gun.pop(0)
-    if bullet == "1":
+    if bullet == 1:
         target.life = target.life - 1 * round.gun_tag
         # 打出翻倍伤害后, 恢复为1倍伤害
         if round.gun_tag == 2:
             round.gun_tag = 1
 
-    if bullet == "0":
+    if bullet == 0:
         pass
     log.debug(
         f"玩家 {player.name} 对 {target.name} 开枪, 子弹 {'实弹' if bullet == 1 else '空包弹'}, 目标生命 {target.life}"

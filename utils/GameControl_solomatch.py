@@ -151,7 +151,7 @@ class PlayerActionsSoloMatch:
         切换指定目标,
         """
         lst_target = self.PlayersShow(filter_status)
-        target_input = int(UserInput("选择目标", lst_target))
+        target_input = int(UserInput("选择目标: ", lst_target))
 
         # 使用偏移后的数组下标表示目标玩家, 或遍历rid, 判断与输入一致的玩家
         if not target_input == 0:
