@@ -1,9 +1,5 @@
 from utils.DctAction import TestFunc
 
-# dct_test = {
-#     "a":TestFunc
-# }
-
 
 dct_props = {
     "1": "香烟",
@@ -34,8 +30,9 @@ dct_action_other = {
     "9": UseHhandcuffs,
 }
 
-
-dct_action_all = {
+dct_action_adrenaline = {
     "6": UseAdrenaline,
+}
+dct_action_shot = {
     "0": UseGun,
 }

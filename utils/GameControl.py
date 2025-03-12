@@ -67,7 +67,7 @@ class PlayerActions:
         """
         使用道具
         """
-        from utils.DctProps import dct_actions,dct_action_all
+        from utils.DctProps import dct_actions,dct_action_shot
 
         # 使用道具前, 玩家状态检查
         if not self.LifeCheck():
@@ -76,7 +76,7 @@ class PlayerActions:
             return
 
         action = dct_actions.get(num, None)
-        action_2 = dct_action_all.get(num, None)
+        action_2 = dct_action_shot.get(num, None)
         if callable(action):
             action(self.player, self.round)
 

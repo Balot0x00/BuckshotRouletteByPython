@@ -6,7 +6,7 @@
 from loguru import logger as log
 from utils.GameControl import RoundInit, GunInit
 from utils.PropEffect import *
-from utils.DctProps import dct_actions, dct_action_other, dct_action_all
+from utils.DctProps import dct_actions, dct_action_other, dct_action_shot,dct_action_adrenaline
 from utils.RandomGenter import RandomSelectTools
 from utils.util import UserInput
 from utils.InitPlayer import PlayerInit
@@ -190,7 +190,8 @@ class PlayerActionsSoloMatch:
         """
         action = dct_actions.get(p_slelect)
         action_other = dct_action_other.get(p_slelect)
-        action_all = dct_action_all.get(p_slelect)
+        action_shot = dct_action_shot.get(p_slelect)
+        action_adrenaline = dct_action_adrenaline.get(p_slelect)
 
         if callable(action):
             log.debug(f"道具有效")
@@ -206,16 +207,23 @@ class PlayerActionsSoloMatch:
             action_other(self.current_player, self.round, target_obj)
             self.RemoveTool(p_slelect)
 
-        elif callable(action_all):
-            log.debug(f"使用0号道具, 对alive slience生效")
+        elif callable(action_shot):
+            log.debug(f"使用0/6号道具, 对alive slience生效")
             target_obj = self.PlayersSelect(["alive", "slience"])
-            buttle = action_all(self.current_player, self.round, target_obj)
+            buttle = action_shot(self.current_player, self.round, target_obj)
 
             # 自空枪判断
             if buttle == 0 and target_obj == self.current_player:
                 log.info(f"玩家 {self.current_player.name} 自空枪")
             else:
                 self.ActionSwitch()
+        elif callable(action_adrenaline):
+            log.debug(f"使用6号道具, 对alive/slience生效")
+            target_obj = self.PlayersSelect(["alive", "slience"])
+            prop_num = action_adrenaline(self.current_player, self.round,target_obj)
+            # 选择道具后直接使用
+            self.RemoveTool(p_slelect)
+            self.UseProps(prop_num)
+            self.ActionSwitch()
         else:
             log.warning(f"道具无效")
-        # self.CheckVirtoy()

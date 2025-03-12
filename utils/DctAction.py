@@ -74,20 +74,28 @@ def UseReverse(player: BasePlayer, round: BaseRound):
 
 
 
-
-def UseAdrenaline(player: BasePlayer, round: BaseRound):
+from .util import UserInput
+def UseAdrenaline(player: BasePlayer, round: BaseRound,target: BasePlayer):
     from utils.RandomGenter import RandomSelectTools
     """
     6: 使用肾上腺素, 获取对方一种道具, 但不能是6
     """
-    prop = RandomSelectTools(1)
-    # log.debug(f"首次获得道具 {prop}")
-    while prop[0].split(":")[0] == "6":
-        prop = RandomSelectTools(1)
-
-    player.props.append(prop[0])
-    log.debug(f"玩家 {player.name} 使用肾上腺素, 获得道具 {prop}")
-    return
+    # 临时处理, 避免选择6
+    target_props = target.props
+    for a in target_props:
+        if a.split(":")[0] == "6":
+            target_props.remove(a)
+    target_props_num = [x.split(":")[0] for x in target_props]
+    
+    # 
+    prop_num =UserInput(prompt=f"{target_props} 选择道具: ",lt=target_props_num)
+    for item in target.props:
+        if prop_num == item.split(":")[0]:
+            target.props.remove(item)
+            player.props.append(item)
+            break
+    log.debug(f"玩家 {player.name} 使用肾上腺素, 获得道具 {item}")
+    return prop_num
 
 
 def UseSaw(player: BasePlayer, round: BaseRound):

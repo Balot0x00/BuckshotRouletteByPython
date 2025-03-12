@@ -3,7 +3,7 @@ from typing import List
 from collections import Counter
 from ..utils.GameControl import PlayerInit, RoundInit, GunInit
 from ..utils.PropEffect import *
-from utils.DctProps import dct_actions, dct_action_other, dct_action_all
+from utils.DctProps import dct_actions, dct_action_other, dct_action_shot
 from ..utils.GameControl import PlayerActions
 from ..utils.RandomGenter import RandomSelectTools
 
@@ -94,7 +94,7 @@ class PlayerActionsSoloMatch:
         """使用道具"""
         action = dct_actions.get(prop_select)
         action_other = dct_action_other.get(prop_select)
-        action_all = dct_action_all.get(prop_select)
+        action_all = dct_action_shot.get(prop_select)
 
         if not self.CheckPlayerState():
             return
