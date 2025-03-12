@@ -208,9 +208,10 @@ class PlayerActionsSoloMatch:
             self.RemoveTool(p_slelect)
 
         elif callable(action_shot):
-            log.debug(f"使用0/6号道具, 对alive slience生效")
+            log.debug(f"使用0号道具, 对alive slience生效")
             target_obj = self.PlayersSelect(["alive", "slience"])
             buttle = action_shot(self.current_player, self.round, target_obj)
+            log.info(f"{self.current_player.name} shot to {target_obj.name}")
 
             # 自空枪判断
             if buttle == 0 and target_obj == self.current_player:
