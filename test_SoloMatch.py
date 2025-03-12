@@ -3,7 +3,6 @@
 """
 
 import utils
-from loguru import logger as log
 
 # 初始化对局
 round01 = utils.RoundInit()
@@ -23,8 +22,13 @@ ps = [zhangsan, npc01]
 action = utils.PlayerActionsSoloMatch(ps, round01)
 # print(action.current_player.name)
 
-
+flag = 0
 while True:
+    if action.CheckVirtoy():
+        # utils.os.system("cls")
+    #     flag +=1
+    # if flag == 1:
+        break
     action.CheckPlayerState()
     action.GunCheck()
     # if not action.CheckPlayerState() and not action.CheckVirtoy():
