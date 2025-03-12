@@ -55,6 +55,11 @@ class PlayerActionsSoloMatch:
         self.round.gun = gun_new.gun
         self.round.props_num = gun_new.props_num
 
+        # 清台
+        log.debug(f"a new gun, clear all props")
+        for player in self.players:
+            player.props = []
+
         log.debug(f"为所有玩家添加道具")
         for player in self.players:
             props_new = RandomSelectTools(self.round.props_num)
@@ -96,6 +101,7 @@ class PlayerActionsSoloMatch:
 
         if result_check == False:
             self.ActionSwitch()
+        
 
     def CheckVirtoy(self):
         """
@@ -104,11 +110,11 @@ class PlayerActionsSoloMatch:
         from collections import Counter
 
         result = False
-        # lst_life = [player.life for player in self.players]
-        # vitory = Counter(lst_life)
-        # log.debug(f"玩家存活状态 {vitory}")
-        # if vitory["0"] == "1":
-        #     result = True
+        lst_life = [player.life for player in self.players]
+        vitory = Counter(lst_life)
+        log.debug(f"玩家存活状态 {vitory}")
+        if vitory[0] == len(self.players)-1:
+            result = True
 
         return result
 
@@ -212,3 +218,4 @@ class PlayerActionsSoloMatch:
                 self.ActionSwitch()
         else:
             log.warning(f"道具无效")
+        # self.CheckVirtoy()
